@@ -98,7 +98,3 @@ class MenuPuntajes:
 
 # Inicializar Pygame
 pygame.init()
-
-# Crear instancia de la clase MenuPuntajes y ejecutar
-# menu_puntajes = MenuPuntajes()
-# menu_puntajes.ejecutar()

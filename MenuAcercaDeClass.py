@@ -124,7 +124,3 @@ class MenuAcercaDe:
 
 # Inicializar Pygame
 pygame.init()
-
-# Crear instancia de la clase MenuAcercaDe y ejecutar
-# menu_acerca_de = MenuAcercaDe()
-# menu_acerca_de.ejecutar()

@@ -115,6 +115,3 @@ class MenuPrincipal:
                         else:
                             print("otro")
                     
-
-# Ejecutar el menú principal
-#menu_principal = MenuPrincipal().menu_principal()

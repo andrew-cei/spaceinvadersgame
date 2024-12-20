@@ -9,19 +9,17 @@ from MenuPrincipalClass import MenuPrincipal
 from MenuAcercaDeClass import MenuAcercaDe
 from MenuPuntajesClass import MenuPuntajes
 from PantallaNombreClass import PantallaNombre
-# Background:
+# Fondo:
 BACKGROUND = pygame.image.load(os.path.join('img', 'background.png'))
 ICON_IMAGE = pygame.image.load(os.path.join('img', 'title_icon.png'))
 TITLE = 'Space Invaders Hybridge'
 
-# Player:
-    # Images
+# Propiedades del jugador:
 PLAYER_IMAGE = pygame.image.load(os.path.join('img', 'player_image.png'))
 BULLET_IMAGE = pygame.image.load(os.path.join('img', 'bullet_image.png'))
-    # SFX
 
 pygame.init()
-# Game window
+# Ventana del juego
 WIDTH, HEIGTH = 800, 600
 WIN = pygame.display.set_mode((WIDTH, HEIGTH))
 pygame.display.set_caption(TITLE)
@@ -56,50 +54,47 @@ def main():
     except:
         pass
 
-    # Instancing the Game
+    # Instanciar el juego
     font = pygame.font.SysFont('comicsans', 50)
     game = Game(font, FPS,  3, WIN, WIDTH, HEIGTH, 0, clock)
     
-    # Player properties and Instancing it
+    # Instanciar el jugador
     player_x = ((WIDTH)-(PLAYER_IMAGE.get_width())) / 2
     player_y = 480
     player = Player(x= player_x, y= player_y, x_speed= 5, y_speed= 4)
 
-    # Enemyes properties and Instancing it in a list of enemies
+    # Instanciar una lista de enemigos
     enemy_init = Enemy(speed = 0.8)
     enemy_wave = 4
     enemies = enemy_init.create(enemy_wave)
 
-    # Drawing
+    # Dibujar en pantalla
     draw = Drawing(WIN) 
     draw.drawing(game, player, enemies, FPS= 60, puntos=0)
 
 
     while run:
         clock.tick(FPS)
-        menu_principal()
+        #menu_principal()
         # Game Over
         if game.over():
             if puntaje > game.max_pun:
                 sound = pygame.mixer.Sound("sounds/ganar.mp3")
                 sound.play()
-                pantalla = PantallaNombre(puntaje, menu_principal) #cambió
+                pantalla = PantallaNombre(puntaje, menu_principal)
                 
-                pygame.quit()#nuevo
-            else:  #nuevo
-                menu_principal()#nuevo
-                run = False#nuevo
-
-
-            #run = False
+                pygame.quit()
+            else:
+                menu_principal()
+                run = False
             
             continue
-        # Quitting the
+        # Salir del juego
         if game.escape():
             run = False
             continue
           
-        # Increasing the Level
+        # Incrementar el nivel
         if len(enemies) == 0:
             game.level += 1
             enemy_wave += 1
@@ -113,19 +108,19 @@ def main():
                     game.lives += 1
 
         
-        # Player Movement
+        # Movimientos del jugador
         player.move()
         player.create_bullets()
         game.reload_bullet(len(player.bullets))
         player.cooldown()
 
-        # Enemy Movement
+        # Movimientos de los enemigos
         for enemy in enemies:
             enemy.move()
             if player.hit(enemy):
                 enemies.remove(enemy)
                 player.fired_bullets.pop(0)
-                crash_sound = pygame.mixer.Sound("sounds/explosion.wav")
+                crash_sound = pygame.mixer.Sound("sounds/explosion.mp3")
                 puntaje += 1
                 pygame.mixer.Sound.play(crash_sound)
             if enemy.y + enemy.get_height() >= HEIGTH:
